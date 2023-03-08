@@ -34,8 +34,7 @@ while true; do
   esac
 done
 clear
-exclude_container="$@"
-containers=$(pct list | tail -n +2 | cut -f1 -d' ' | grep -vE "^($exclude_container)$")
+containers=$(pct list | tail -n +2 | cut -f1 -d' ')
 function update_container() {
   container=$1
   header_info
@@ -50,6 +49,7 @@ function update_container() {
   esac
 }
 header_info
+
 for container in $containers; do
   status=$(pct status $container)
   template=$(pct config $container | grep -q "template:" && echo "true" || echo "false")
